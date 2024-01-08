@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 public final class Constants {
 
     public static class OperatorConstants {
@@ -13,8 +15,13 @@ public final class Constants {
         public static final int port = 0;
         public static final double deadbandLeftJoystick = 0.05;
         public static final double deadbandRightJoystick = deadbandLeftJoystick;
-        public static final int ForwardDriveAxis = 3;
-        public static final int TurningDriveAxis = 2;
+
+        public static final int forwardAxis = 1;
+        public static final int strafeAxis = 0;
+        public static final int turnAxis = 4;
+
+        public static final double speedMetersPerSecond = Units.feetToMeters(4);
+        public static double speedRadiansPerSecond = 0.5*Math.PI;
     }
     
 }
