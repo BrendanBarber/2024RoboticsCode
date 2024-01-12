@@ -23,5 +23,22 @@ public final class Constants {
         public static final double speedMetersPerSecond = Units.feetToMeters(4);
         public static double speedRadiansPerSecond = 0.5*Math.PI;
     }
+
+    public static class Intake {
+        public static final int armID = 6;
+        public static final int spinID = 7;
+
+        public static final double armOutPosition = 0;
+        public static final double armInPosition = 0;
+
+        public static final double intakeStoppedSpeed = 0;
+        public static final double intakeTakeInSpeed = 0.7;
+        public static final double intakeShootOutSpeed = -0.7;
+    }
+
+    public static class Launch {
+        public static final int launchMotorID = 8;
+        public static final int launchMotorFollowerID = 9;
+    }
     
 }

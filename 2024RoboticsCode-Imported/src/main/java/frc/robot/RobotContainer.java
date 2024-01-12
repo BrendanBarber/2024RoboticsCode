@@ -7,15 +7,21 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.IntakeMove;
+import frc.robot.commands.IntakeSpin;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystem.IntakeSpinState;
 
 public class RobotContainer {
 
   public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem(this);
+  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(this);
 
   public SendableChooser<DuckAutoProfile> autonomousMode = new SendableChooser<>();
 
@@ -28,8 +34,13 @@ public class RobotContainer {
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    driverJoystick.cross().onTrue(new SequentialCommandGroup(new IntakeMove(intakeSubsystem, true), new IntakeSpin(intakeSubsystem, IntakeSpinState.TAKE_IN)));
+    driverJoystick.cross().onFalse(new SequentialCommandGroup(new IntakeMove(intakeSubsystem, false), new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED)));
 
+    driverJoystick.circle().onTrue(new SequentialCommandGroup(new IntakeMove(intakeSubsystem, true), new IntakeSpin(intakeSubsystem, IntakeSpinState.SHOOT_OUT)));
+    driverJoystick.circle().onFalse(new SequentialCommandGroup(new IntakeMove(intakeSubsystem, false), new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED)));
+  }
 
   public DuckAutoProfile getAutonomousProfile(){
     return autonomousMode.getSelected();
