@@ -15,8 +15,8 @@ public class IntakeSubsystem extends SubsystemBase {
         STOPPED;
     }
     
-    TalonFX intakeArmMotor = new TalonFX(Constants.Intake.armID);
-    TalonFX intakeSpinMotor = new TalonFX(Constants.Intake.spinID);
+    //TalonFX intakeArmMotor = new TalonFX(Constants.Intake.armID);
+    //TalonFX intakeSpinMotor = new TalonFX(Constants.Intake.spinID);
 
     boolean intakeArmOut = false;
 
@@ -30,26 +30,26 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
         //set armMotor position to Out or In depending on bool intakeArmOut
         if(intakeArmOut){
-            intakeArmMotor.setPosition(Constants.Intake.armOutPosition);
+            //intakeArmMotor.setPosition(Constants.Intake.armOutPosition);
             SmartDashboard.putBoolean("ArmOut?", true);
         }
         else{
-            intakeArmMotor.setPosition(Constants.Intake.armInPosition);
+            //intakeArmMotor.setPosition(Constants.Intake.armInPosition);
             SmartDashboard.putBoolean("ArmOut?", false);
         }
 
         //set the spinMotor to whatever intakeSpinState is
         switch(intakeSpinState){
             case STOPPED:
-                intakeSpinMotor.set(Constants.Intake.intakeStoppedSpeed);
+                //intakeSpinMotor.set(Constants.Intake.intakeStoppedSpeed);
                 SmartDashboard.putString("SpinState", "STOPPED");
                 break;
             case TAKE_IN:
-                intakeSpinMotor.set(Constants.Intake.intakeTakeInSpeed);
+                //intakeSpinMotor.set(Constants.Intake.intakeTakeInSpeed);
                 SmartDashboard.putString("SpinState", "TAKE_IN");
                 break;
             case SHOOT_OUT:
-                intakeSpinMotor.set(Constants.Intake.intakeShootOutSpeed);
+                //intakeSpinMotor.set(Constants.Intake.intakeShootOutSpeed);
                 SmartDashboard.putString("SpinState", "SHOOT_OUT");
         }
     }

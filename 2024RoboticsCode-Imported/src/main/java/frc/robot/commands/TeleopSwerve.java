@@ -15,12 +15,12 @@ public class TeleopSwerve extends Command {
 
         @Override
         public void execute() {
-                /*swerveSubsystem.getSwerveDrive().drive(
+                swerveSubsystem.getSwerveDrive().drive(
                         new Translation2d(-RobotContainer.driverJoystick.getRawAxis(Constants.DriverConstants.forwardAxis) * Constants.DriverConstants.speedMetersPerSecond,
                         -RobotContainer.driverJoystick.getRawAxis(Constants.DriverConstants.strafeAxis) * Constants.DriverConstants.speedMetersPerSecond),
                         RobotContainer.driverJoystick.getRawAxis(Constants.DriverConstants.turnAxis) * Constants.DriverConstants.speedRadiansPerSecond,
                         false,
                         false
-                );*/
+                );
         }
 }

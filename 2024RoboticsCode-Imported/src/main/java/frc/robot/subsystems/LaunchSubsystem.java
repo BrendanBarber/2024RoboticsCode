@@ -8,7 +8,7 @@ import frc.robot.RobotContainer;
 
 public class LaunchSubsystem extends SubsystemBase {
     
-    TalonFX launchMotor = new TalonFX(Constants.Launch.launchMotorID);
+    //TalonFX launchMotor = new TalonFX(Constants.Launch.launchMotorID);
 
     public LaunchSubsystem(RobotContainer robotContainer){
         //config motors
