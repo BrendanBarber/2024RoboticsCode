@@ -14,20 +14,24 @@ import frc.robot.commands.TeleopSwerve;
 import swervelib.SwerveDrive;
 import swervelib.math.SwerveMath;
 import swervelib.parser.SwerveParser;
+import swervelib.telemetry.SwerveDriveTelemetry;
+import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-        private final double maximumSpeed = Units.feetToMeters(4.5);
+        private final double maximumSpeed = Units.feetToMeters(14.5);
         private File swerveJsonDirectory;
         private SwerveDrive swerveDrive;
 
         public DrivetrainSubsystem(RobotContainer robotContainer) {
                 this.swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
 
+                SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
                 try {
                         this.swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
+                swerveDrive.setHeadingCorrection(false);
                 this.setDefaultCommand(new TeleopSwerve(this));
         }
 
@@ -42,6 +46,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                                 swerveDrive.getModules()[1].getAbsolutePosition());
                 SmartDashboard.putNumber(swerveDrive.getModules()[2].configuration.name,
                                 swerveDrive.getModules()[2].getAbsolutePosition());
+
+                SmartDashboard.putNumber("RobotActualSpeed", swerveDrive.getModules()[0].getDriveMotor().getVelocity());
         }
 
         /**

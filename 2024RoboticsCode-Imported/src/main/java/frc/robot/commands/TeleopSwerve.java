@@ -27,12 +27,14 @@ public class TeleopSwerve extends Command {
 
                 double vX = -RobotContainer.driverJoystick.getRawAxis(Constants.DriverConstants.forwardAxis) * DriverConstants.speedMetersPerSecond;
                 double vY = -RobotContainer.driverJoystick.getRawAxis(Constants.DriverConstants.strafeAxis) * DriverConstants.speedMetersPerSecond;
-                double heading = -RobotContainer.driverJoystick.getRawAxis(Constants.DriverConstants.turnAxis) * DriverConstants.speedRadiansPerSecond;
+                double heading = -RobotContainer.driverJoystick.getRawAxis(Constants.DriverConstants.turnAxis);
 
                 ChassisSpeeds desiredSpeeds = swerveSubsystem.getTargetSpeeds(vX, vY,
                                 new Rotation2d(heading * Math.PI));
 
                 Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
+                
+                //add in if robot is tipping
                 /*
                  * translation = SwerveMath.limitVelocity(translation,
                  * swerve.getFieldVelocity(), swerve.getPose(),
@@ -41,8 +43,10 @@ public class TeleopSwerve extends Command {
                  */
 
                 // Make the robot move
-                swerveSubsystem.getSwerveDrive().drive(translation, desiredSpeeds.omegaRadiansPerSecond, true, false);
+                //swerveSubsystem.getSwerveDrive().drive(translation, desiredSpeeds.omegaRadiansPerSecond, true, false);
+                swerveSubsystem.getSwerveDrive().driveFieldOriented(desiredSpeeds);
 
+                //robot relative drive, probably wont ever use
                 /*
                  * swerveSubsystem.getSwerveDrive().drive(
                  * new Translation2d(-RobotContainer.driverJoystick.getRawAxis(Constants.
