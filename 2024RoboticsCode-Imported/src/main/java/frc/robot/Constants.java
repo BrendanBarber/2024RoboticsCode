@@ -18,10 +18,12 @@ public final class Constants {
 
         public static final int forwardAxis = 1;
         public static final int strafeAxis = 0;
-        public static final int turnAxis = 4;
+        public static final int turnAxis = 2;
 
-        public static final double speedMetersPerSecond = Units.feetToMeters(4);
-        public static double speedRadiansPerSecond = 0.5*Math.PI;
+        public static final double speedMultiplier = 3; //must be larger, for now it is here to keep in low speed
+        public static final double turnSpeedMultiplier = 3; //still not turning
+        public static final double speedMetersPerSecond = Units.feetToMeters(4) * speedMultiplier;
+        public static double speedRadiansPerSecond = 0.5*Math.PI * turnSpeedMultiplier;
     }
 
     public static class Intake {
