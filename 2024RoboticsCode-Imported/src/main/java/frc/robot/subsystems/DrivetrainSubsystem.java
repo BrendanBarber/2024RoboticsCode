@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -37,6 +38,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         @Override
         public void periodic() {
+
                 // This method will be called once per scheduler run
                 SmartDashboard.putNumber(swerveDrive.getModules()[0].configuration.name,
                                 swerveDrive.getModules()[0].getAbsolutePosition());
@@ -47,7 +49,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 SmartDashboard.putNumber(swerveDrive.getModules()[2].configuration.name,
                                 swerveDrive.getModules()[2].getAbsolutePosition());
 
-                SmartDashboard.putNumber("RobotActualSpeed", swerveDrive.getModules()[0].getDriveMotor().getVelocity());
+                SmartDashboard.putNumber("Yaw Angle", swerveDrive.getYaw().getDegrees());
+                SmartDashboard.putNumber("Pitch Angle", swerveDrive.getPitch().getDegrees());
+                SmartDashboard.putNumber("Roll Angle", swerveDrive.getRoll().getDegrees());
         }
 
         /**
