@@ -20,6 +20,9 @@ public final class Constants {
         public static final int strafeAxis = 0;
         public static final int turnAxis = 2;
 
+        public static final double autoMaxSpeedMeters = 5;
+        public static final double autoMaxAccelerationMeters = 3;
+
         public static final double speedMultiplier = 5; //must be larger, for now it is here to keep in low speed
         public static final double turnSpeedMultiplier = 5; //still not turning
         public static final double speedMetersPerSecond = Units.feetToMeters(4) * speedMultiplier;
@@ -38,9 +41,23 @@ public final class Constants {
         public static final double intakeShootOutSpeed = -0.7;
     }
 
+    public static class Conveyer {
+        public static final int conveyerID = 10;
+
+        public static final double conveyerStoppedSpeed = 0;
+        public static final double conveyerTakeInSpeed = 0.7;
+        public static final double conveyerShootOutSpeed = -0.7;
+    }
+
     public static class Launch {
         public static final int launchMotorID = 8;
         public static final int launchMotorFollowerID = 9;
+    }
+
+    public static class AutoTrajectoryFileNames{
+        public static final String TEST_STRAIGHT = "Test Straight Path";
+        public static final String TEST_CURVE = "Test Curve Path";
+        public static final String TWO_NOTE = "2 Note Auto";
     }
     
 }

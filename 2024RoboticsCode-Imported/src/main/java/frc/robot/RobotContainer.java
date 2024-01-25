@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -12,8 +15,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ConveyerSpin;
 import frc.robot.commands.IntakeMove;
 import frc.robot.commands.IntakeSpin;
+import frc.robot.subsystems.ConveyerSubsystem;
+import frc.robot.subsystems.ConveyerSubsystem.ConveyerState;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.IntakeSubsystem.IntakeSpinState;
@@ -22,8 +28,9 @@ public class RobotContainer {
 
   public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem(this);
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(this);
+  public ConveyerSubsystem conveyerSubsystem = new ConveyerSubsystem(this);
 
-  public SendableChooser<DuckAutoProfile> autonomousMode = new SendableChooser<>();
+  public SendableChooser<SequentialCommandGroup> autonomousMode = new SendableChooser<SequentialCommandGroup>();
 
   public final static CommandPS4Controller driverJoystick =
       new CommandPS4Controller(DriverConstants.port);
@@ -31,18 +38,46 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.port);
 
   public RobotContainer() {
+    Shuffleboard.getTab("autos").add(autonomousMode);
+    drivetrainSubsystem.setupPathPlanner();
+
+    registerNamedCommands();
     configureBindings();
   }
 
-  private void configureBindings() {
-    driverJoystick.cross().onTrue(new SequentialCommandGroup(new IntakeMove(intakeSubsystem, true), new IntakeSpin(intakeSubsystem, IntakeSpinState.TAKE_IN)));
-    driverJoystick.cross().onFalse(new SequentialCommandGroup(new IntakeMove(intakeSubsystem, false), new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED)));
+  private void registerNamedCommands(){
+    NamedCommands.registerCommand("Intake", new SequentialCommandGroup(
+      new IntakeMove(intakeSubsystem, true), 
+      new IntakeSpin(intakeSubsystem, IntakeSpinState.TAKE_IN),
+      new ConveyerSpin(conveyerSubsystem, ConveyerState.TAKE_IN)));
 
-    driverJoystick.circle().onTrue(new SequentialCommandGroup(new IntakeMove(intakeSubsystem, true), new IntakeSpin(intakeSubsystem, IntakeSpinState.SHOOT_OUT)));
-    driverJoystick.circle().onFalse(new SequentialCommandGroup(new IntakeMove(intakeSubsystem, false), new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED)));
+    NamedCommands.registerCommand("StopIntake", new SequentialCommandGroup(
+      new IntakeMove(intakeSubsystem, false),
+      new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED),
+      new ConveyerSpin(conveyerSubsystem, ConveyerState.HOLDING)));
   }
 
-  public DuckAutoProfile getAutonomousProfile(){
+  private void configureBindings() {
+    driverJoystick.cross().onTrue(new SequentialCommandGroup(
+      new IntakeMove(intakeSubsystem, true), 
+      new IntakeSpin(intakeSubsystem, IntakeSpinState.TAKE_IN), 
+      new ConveyerSpin(conveyerSubsystem, ConveyerState.TAKE_IN)));
+    driverJoystick.cross().onFalse(new SequentialCommandGroup(
+      new IntakeMove(intakeSubsystem, false),
+      new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED),
+      new ConveyerSpin(conveyerSubsystem, ConveyerState.HOLDING)));
+
+    driverJoystick.circle().onTrue(new SequentialCommandGroup(
+      new IntakeMove(intakeSubsystem, true),
+      new IntakeSpin(intakeSubsystem, IntakeSpinState.SHOOT_OUT),
+      new ConveyerSpin(conveyerSubsystem, ConveyerState.SHOOT_OUT)));
+    driverJoystick.circle().onFalse(new SequentialCommandGroup(
+      new IntakeMove(intakeSubsystem, false),
+      new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED),
+      new ConveyerSpin(conveyerSubsystem, ConveyerState.STOPPED)));
+  }
+
+  public SequentialCommandGroup getAutoCommandGroup(){
     return autonomousMode.getSelected();
   }
 

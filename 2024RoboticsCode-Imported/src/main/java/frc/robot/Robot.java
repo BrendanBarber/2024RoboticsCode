@@ -9,9 +9,11 @@ import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Autos;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -32,6 +34,8 @@ public class Robot extends TimedRobot {
     DoubleTopic waitDelayTopic = new DoubleTopic(nt.getTopic("/SmartDashboard/Wait Delay (Seconds)"));
     waitDelayEntry = waitDelayTopic.getEntry(0.0);
     waitDelayEntry.setDefault(waitDelay);
+
+    Autos.pushAutosToDashboard(m_robotContainer.autonomousMode, m_robotContainer.drivetrainSubsystem);
   }
 
   @Override
@@ -40,8 +44,6 @@ public class Robot extends TimedRobot {
 
     if (waitDelayEntry.get() != waitDelay) {
       waitDelay = waitDelayEntry.get();
-      
-      //Add -> Push autos, pass in subsystems
     }
   }
 
@@ -56,9 +58,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    DuckAutoProfile autoProfile = m_robotContainer.getAutonomousProfile();
-    autoProfile.addDelay(waitDelay);
-    m_autonomousCommand = autoProfile.getAutoCommand();
+    m_autonomousCommand = m_robotContainer.getAutoCommandGroup();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
