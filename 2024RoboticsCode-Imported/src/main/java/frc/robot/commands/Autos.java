@@ -27,6 +27,16 @@ public class Autos {
             drivetrainSubsystem.getAutonomousCommand(pathName, true));;
         return command;
     }
+
+    public static SequentialCommandGroup threeNoteAuto(DrivetrainSubsystem drivetrainSubsystem){
+        String path1Name = Constants.AutoTrajectoryFileNames.TWO_NOTE;
+        String path2Name = "1 More Note Auto";
+        SequentialCommandGroup command = new SequentialCommandGroup(
+            drivetrainSubsystem.getAutonomousCommand(path1Name, true),
+            drivetrainSubsystem.getAutonomousCommand(path2Name, false)
+        );
+        return command;
+    }
     
     public static void pushAutosToDashboard(SendableChooser<SequentialCommandGroup> autonomousMode,
         DrivetrainSubsystem drivetrainSubsystem){
@@ -34,6 +44,7 @@ public class Autos {
         autonomousMode.setDefaultOption("straight path", testStraightPath(drivetrainSubsystem));
         autonomousMode.addOption("curved path", testCurvePath(drivetrainSubsystem));
         autonomousMode.addOption("two note", twoNoteAuto(drivetrainSubsystem));
+        autonomousMode.addOption("three note", threeNoteAuto(drivetrainSubsystem));
     }
 
 }

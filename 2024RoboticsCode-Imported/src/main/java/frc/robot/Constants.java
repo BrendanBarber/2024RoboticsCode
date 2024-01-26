@@ -58,6 +58,7 @@ public final class Constants {
         public static final String TEST_STRAIGHT = "Test Straight Path";
         public static final String TEST_CURVE = "Test Curve Path";
         public static final String TWO_NOTE = "2 Note Auto";
+        public static final String ONE_MORE_NOTE = "1 More Note Auto";
     }
     
 }
