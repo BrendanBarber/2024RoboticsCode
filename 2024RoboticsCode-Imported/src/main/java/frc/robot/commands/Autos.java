@@ -30,7 +30,7 @@ public class Autos {
 
     public static SequentialCommandGroup threeNoteAuto(DrivetrainSubsystem drivetrainSubsystem){
         String path1Name = Constants.AutoTrajectoryFileNames.TWO_NOTE;
-        String path2Name = "1 More Note Auto";
+        String path2Name = Constants.AutoTrajectoryFileNames.ONE_MORE_NOTE;
         SequentialCommandGroup command = new SequentialCommandGroup(
             drivetrainSubsystem.getAutonomousCommand(path1Name, true),
             drivetrainSubsystem.getAutonomousCommand(path2Name, false)
