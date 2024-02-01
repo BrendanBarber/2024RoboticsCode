@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.IntakeSubsystem.IntakeSpinState;
 
 public class ConveyerSubsystem extends SubsystemBase{
     
@@ -17,31 +17,51 @@ public class ConveyerSubsystem extends SubsystemBase{
         SHOOT_OUT,
     }
 
-    //TalonFX conveyerMotor = new TalonFX(Constants.Conveyer.conveyerID);
+    TalonFX conveyerMotor = new TalonFX(Constants.Conveyer.conveyerID);
+
+    TalonFXConfiguration conveyerMotorConfig;
+
+    public double currentMax = 28.0;
 
     ConveyerState currentConveyerState = ConveyerState.STOPPED;
 
     public ConveyerSubsystem(RobotContainer robotContainer){
-        // configure motors
+        conveyerMotorConfig = new TalonFXConfiguration();        
+        
+        configure();
+    }
+
+    private void configure(){
+        conveyerMotorConfig.Slot0.kP = Constants.Intake.armP;
+        conveyerMotorConfig.Slot0.kI = Constants.Intake.armI;
+        conveyerMotorConfig.Slot0.kD = Constants.Intake.armD;
+
+        conveyerMotor.getConfigurator().apply(conveyerMotorConfig);
     }
 
     @Override
     public void periodic(){
+        // Automatic Stop
+        if(conveyerMotor.getStatorCurrent().getValueAsDouble() > currentMax){
+            currentConveyerState = ConveyerState.HOLDING;
+        }
+
+        // State Machine
         switch (currentConveyerState) {
             case STOPPED:
-                //conveyerMotor.set(Constants.Conveyer.conveyerStoppedSpeed);    
+                conveyerMotor.set(Constants.Conveyer.conveyerStoppedSpeed);    
                 SmartDashboard.putString("ConveyerState", "STOPPED");
                 break;
             case HOLDING:
-                //conveyerMotor.set(Constants.Conveyer.conveyerStoppedSpeed);
+                conveyerMotor.set(Constants.Conveyer.conveyerStoppedSpeed);
                 SmartDashboard.putString("ConveyerState", "HOLDING");
                 break;
             case TAKE_IN:
-                //conveyerMotor.set(Constants.Conveyer.conveyerTakeInSpeed);
+                conveyerMotor.set(Constants.Conveyer.conveyerTakeInSpeed);
                 SmartDashboard.putString("ConveyerState", "TAKE IN");
                 break;
             case SHOOT_OUT:
-                //conveyerMotor.set(Constants.Conveyer.conveyerShootOutSpeed);  
+                conveyerMotor.set(Constants.Conveyer.conveyerShootOutSpeed);  
                 SmartDashboard.putString("ConveyerState", "SHOOT OUT");      
                 break;
             default:

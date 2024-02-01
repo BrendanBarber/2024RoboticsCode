@@ -33,20 +33,35 @@ public final class Constants {
         public static final int armID = 6;
         public static final int spinID = 7;
 
+        // Positions
         public static final double armOutPosition = 0;
         public static final double armInPosition = 0;
 
+        // Speeds
         public static final double intakeStoppedSpeed = 0;
-        public static final double intakeTakeInSpeed = 0.7;
-        public static final double intakeShootOutSpeed = -0.7;
+        public static final double intakeTakeInSpeed = 0.6;
+        public static final double intakeShootOutSpeed = -0.6;
+
+        // PID
+        public static final double armP = 0;
+        public static final double armI = 0;
+        public static final double armD = 0;
+
+        public static final double intakeP = 0;
+        public static final double intakeI = 0;
+        public static final double intakeD = 0;
     }
 
     public static class Conveyer {
-        public static final int conveyerID = 10;
+        public static final int conveyerID = 11;
 
         public static final double conveyerStoppedSpeed = 0;
-        public static final double conveyerTakeInSpeed = 0.7;
-        public static final double conveyerShootOutSpeed = -0.7;
+        public static final double conveyerTakeInSpeed = 0.6;
+        public static final double conveyerShootOutSpeed = -0.6;
+
+        public static final double conveyerP = 0;
+        public static final double conveyerI = 0;
+        public static final double conveyerD = 0;
     }
 
     public static class Launch {
