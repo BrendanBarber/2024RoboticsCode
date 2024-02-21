@@ -30,8 +30,8 @@ public final class Constants {
     }
 
     public static class Intake {
-        public static final int armID = 6;
-        public static final int spinID = 7;
+        public static final int spinID = 6;
+        public static final int spinIDFollower = 7;
 
         // Positions
         public static final double armOutPosition = 0;
@@ -52,21 +52,19 @@ public final class Constants {
         public static final double intakeD = 0;
     }
 
-    public static class Conveyer {
-        public static final int conveyerID = 11;
+    public static class Arm {
+        public static final int armID = 11;
+        public static final int armFollowerID = 31;
+        public static final int encoderID = 30;
 
-        public static final double conveyerStoppedSpeed = 0;
-        public static final double conveyerTakeInSpeed = 0.6;
-        public static final double conveyerShootOutSpeed = -0.6;
-
-        public static final double conveyerP = 0;
-        public static final double conveyerI = 0;
-        public static final double conveyerD = 0;
+        public static final double armDefaultP = 0;
+        public static final double armDefaultI = 0;
+        public static final double armDefaultD = 0;
     }
 
     public static class Launch {
-        public static final int launchMotorID = 8;
-        public static final int launchMotorFollowerID = 9;
+        public static final int launchMotorID = 12;
+        public static final int launchMotorFollowerID = 13;
     }
 
     public static class AutoTrajectoryFileNames{

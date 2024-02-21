@@ -16,11 +16,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ConveyerSpin;
-import frc.robot.commands.IntakeMove;
 import frc.robot.commands.IntakeSpin;
-import frc.robot.subsystems.ConveyerSubsystem;
-import frc.robot.subsystems.ConveyerSubsystem.ConveyerState;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.IntakeSubsystem.IntakeSpinState;
@@ -29,7 +26,7 @@ public class RobotContainer {
 
   public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem(this);
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(this);
-  public ConveyerSubsystem conveyerSubsystem = new ConveyerSubsystem(this);
+  public ArmSubsystem conveyerSubsystem = new ArmSubsystem(this);
 
   public SendableChooser<SequentialCommandGroup> autonomousMode = new SendableChooser<SequentialCommandGroup>();
 
@@ -47,7 +44,7 @@ public class RobotContainer {
   }
 
   private void registerNamedCommands(){
-    NamedCommands.registerCommand("Intake", new SequentialCommandGroup(
+    /*NamedCommands.registerCommand("Intake", new SequentialCommandGroup(
       new IntakeMove(intakeSubsystem, true), 
       new IntakeSpin(intakeSubsystem, IntakeSpinState.TAKE_IN),
       new ConveyerSpin(conveyerSubsystem, ConveyerState.TAKE_IN)));
@@ -55,11 +52,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("StopIntake", new SequentialCommandGroup(
       new IntakeMove(intakeSubsystem, false),
       new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED),
-      new ConveyerSpin(conveyerSubsystem, ConveyerState.HOLDING)));
+      new ConveyerSpin(conveyerSubsystem, ConveyerState.HOLDING)));*/
   }
 
   private void configureBindings() {
-    driverJoystick.cross().onTrue(new SequentialCommandGroup(
+    /*driverJoystick.cross().onTrue(new SequentialCommandGroup(
       new IntakeMove(intakeSubsystem, true), 
       new IntakeSpin(intakeSubsystem, IntakeSpinState.TAKE_IN), 
       new ConveyerSpin(conveyerSubsystem, ConveyerState.TAKE_IN)));
@@ -75,7 +72,7 @@ public class RobotContainer {
     driverJoystick.circle().onFalse(new SequentialCommandGroup(
       new IntakeMove(intakeSubsystem, false),
       new IntakeSpin(intakeSubsystem, IntakeSpinState.STOPPED),
-      new ConveyerSpin(conveyerSubsystem, ConveyerState.STOPPED)));
+      new ConveyerSpin(conveyerSubsystem, ConveyerState.STOPPED)));*/
   }
 
   public SequentialCommandGroup getAutoCommandGroup(){
